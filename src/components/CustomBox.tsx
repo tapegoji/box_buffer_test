@@ -10,6 +10,7 @@ const FACE_NAMES = ['FRONT', 'RIGHT', 'BACK', 'LEFT', 'TOP', 'BOTTOM']
 export default function CustomBox() {
   const meshRef = useRef<THREE.Mesh>(null)
   const [hoveredFace, setHoveredFace] = useState<number>(-1)
+  const [selectedFaces, setSelectedFaces] = useState<Set<number>>(new Set())
 
   const geometry = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -107,10 +108,10 @@ export default function CustomBox() {
   const materials = useMemo(() => {
     return FACE_NAMES.map((_, index) => 
       new THREE.MeshStandardMaterial({ 
-        color: hoveredFace === index ? '#ff0000' : '#cccccc' 
+        color: selectedFaces.has(index) || hoveredFace === index ? '#ff0000' : '#cccccc' 
       })
     )
-  }, [hoveredFace])
+  }, [hoveredFace, selectedFaces])
 
   const handlePointerMove = (event: { intersections: Array<{ face: { materialIndex: number } }> }) => {
     if (event.intersections.length > 0) {
@@ -126,6 +127,22 @@ export default function CustomBox() {
     setHoveredFace(-1)
   }
 
+  const handleClick = (event: { intersections: Array<{ face: { materialIndex: number } }> }) => {
+    if (event.intersections.length > 0) {
+      const materialIndex = event.intersections[0].face.materialIndex
+      
+      setSelectedFaces(prev => {
+        const newSet = new Set(prev)
+        if (newSet.has(materialIndex)) {
+          newSet.delete(materialIndex) // Deselect if already selected
+        } else {
+          newSet.add(materialIndex) // Select if not selected
+        }
+        return newSet
+      })
+    }
+  }
+
   return (
     <>
       <mesh
@@ -134,6 +151,7 @@ export default function CustomBox() {
         material={materials}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
+        onClick={handleClick}
       />
       
       {hoveredFace !== -1 && (
