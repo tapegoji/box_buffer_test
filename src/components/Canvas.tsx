@@ -13,11 +13,11 @@ export default function Scene() {
         <ambientLight intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <CustomBox />
-        <OrbitControls enableDamping={false} enablePan={true} enableZoom={true} enableRotate={true} makeDefault />
+        <OrbitControls enableDamping={false} makeDefault />
         <GizmoHelper
           alignment="bottom-right"
           margin={[80, 80]}
-        >
+          >
           <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white" />
         </GizmoHelper>
       </Canvas>
