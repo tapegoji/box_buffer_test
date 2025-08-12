@@ -2,7 +2,7 @@
 
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei'
-import CustomBox from './CustomBox'
+import CustomBox from './AddGeometry'
 
 export default function Scene() {
   return (
