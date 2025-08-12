@@ -2,7 +2,7 @@
 
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei'
-import CustomBox from './AddGeometry'
+import CustomGeometry from './AddGeometry'
 
 export default function Scene() {
   return (
@@ -12,7 +12,7 @@ export default function Scene() {
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
-        <CustomBox />
+        <CustomGeometry />
         <OrbitControls enableDamping={false} makeDefault />
         <GizmoHelper
           alignment="top-right"

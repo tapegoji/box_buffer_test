@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 // Face names mapping - moved outside component to avoid dependency issues
 const FACE_NAMES = ['FRONT', 'RIGHT', 'BACK', 'LEFT', 'TOP', 'BOTTOM']
 
-export default function CustomBox() {
+export default function CustomGeometry() {
   const meshRef = useRef<THREE.Mesh>(null)
   const [hoveredFace, setHoveredFace] = useState<number>(-1)
   const [selectedFaces, setSelectedFaces] = useState<Set<number>>(new Set())
