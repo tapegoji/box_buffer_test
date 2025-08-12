@@ -7,10 +7,10 @@ import { Badge } from '@/components/ui/badge'
 import { useCADGeometry } from '@/hooks/useCADGeometry'
 
 interface CustomGeometryProps {
-  geometryId?: string
+  geometryId: string
 }
 
-export default function CustomGeometry({ geometryId = 'box' }: CustomGeometryProps) {
+export default function CustomGeometry({ geometryId }: CustomGeometryProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const [hoveredFace, setHoveredFace] = useState<number>(-1)
   const [selectedFaces, setSelectedFaces] = useState<Set<number>>(new Set())

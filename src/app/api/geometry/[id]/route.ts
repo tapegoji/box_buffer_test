@@ -13,8 +13,8 @@ export async function GET(
   // This simulates data that would come from OpenCASCADE topology translation
   let cadMeshData
 
-  if (geometryId === 'box2') {
-    // Second box geometry at different position
+  if (geometryId === 'box1') {
+    // First box geometry
     cadMeshData = {
       id: geometryId,
       metadata: {
@@ -25,9 +25,9 @@ export async function GET(
         angularTolerance: 0.1
       },
       transform: {
-        position: [3, 0, 2] as [number, number, number], // Second box at different position
-        rotation: [0, 0, Math.PI/4] as [number, number, number], // Rotated 45 degrees around Z
-        scale: [0.5, 0.5, 2] as [number, number, number] // Smaller and taller
+        position: [0, 0, 0] as [number, number, number], // First box at origin
+        rotation: [0, 0, 0] as [number, number, number], // No rotation
+        scale: [1, 1, 1] as [number, number, number]     // Unit scale
       },
       faces: [
         {
@@ -122,8 +122,8 @@ export async function GET(
         }
       ]
     }
-  } else {
-    // Default box geometry
+  } else if (geometryId === 'box2') {
+    // Second box geometry at different position
     cadMeshData = {
       id: geometryId,
       metadata: {
@@ -134,9 +134,9 @@ export async function GET(
         angularTolerance: 0.1
       },
       transform: {
-        position: [0, 0, 0] as [number, number, number], // Box sits at origin
-        rotation: [0, 0, 0] as [number, number, number], // No rotation
-        scale: [1, 1, 1] as [number, number, number]     // Unit scale
+        position: [3, 0, 2] as [number, number, number], // Second box at different position
+        rotation: [0, 0, Math.PI/4] as [number, number, number], // Rotated 45 degrees around Z
+        scale: [0.5, 0.5, 2] as [number, number, number] // Smaller and taller
       },
       faces: [
         {

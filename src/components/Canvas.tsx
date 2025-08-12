@@ -9,14 +9,14 @@ export default function Scene() {
     <div className="w-full h-screen">
       <Canvas
         camera={{ 
-          position: [3, 3, 3], // Adjusted for Z-up and box at z=5
+          position: [5, 5, 5], // Adjusted for Z-up and box at z=5
           fov: 75,
           up: [0, 0, 1] // Z-up orientation like CAD systems
         }}
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[10, 10, 10]} intensity={1} />
-        <CustomGeometry />
+        <CustomGeometry key="box1" geometryId="box1" />
         <CustomGeometry key="box2" geometryId="box2" />
         <OrbitControls 
           enableDamping={false} 
