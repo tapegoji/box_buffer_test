@@ -15,7 +15,7 @@ export default function Scene() {
         <CustomBox />
         <OrbitControls enableDamping={false} makeDefault />
         <GizmoHelper
-          alignment="bottom-right"
+          alignment="top-right"
           margin={[80, 80]}
           >
           <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white" />
