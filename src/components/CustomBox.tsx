@@ -3,6 +3,7 @@
 import { useRef, useMemo, useState } from 'react'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
+import { Badge } from '@/components/ui/badge'
 
 // Face names mapping - moved outside component to avoid dependency issues
 const FACE_NAMES = ['FRONT', 'RIGHT', 'BACK', 'LEFT', 'TOP', 'BOTTOM']
@@ -156,9 +157,9 @@ export default function CustomBox() {
       
       {hoveredFace !== -1 && (
         <Html position={[0, 3, 0]} center>
-          <div className="bg-black bg-opacity-70 text-white px-3 py-1 rounded text-lg font-bold">
+          <Badge variant="secondary" className="text-lg font-bold">
             {FACE_NAMES[hoveredFace]}
-          </div>
+          </Badge>
         </Html>
       )}
     </>

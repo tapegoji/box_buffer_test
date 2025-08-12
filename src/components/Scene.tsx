@@ -9,7 +9,6 @@ export default function Scene() {
     <div className="w-full h-screen">
       <Canvas
         camera={{ position: [3, 3, 3], fov: 75 }}
-        className="bg-gray-900"
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
