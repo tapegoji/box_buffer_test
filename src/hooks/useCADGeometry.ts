@@ -135,10 +135,16 @@ export function useCADGeometry(geometryId: string): UseCADGeometryReturn {
     return cadData.faces.map(face => face.name)
   }, [cadData])
 
+  // Extract transform data
+  const transform = useMemo(() => {
+    return cadData?.transform || null
+  }, [cadData])
+
   return {
     geometry,
     materials,
     faceNames,
+    transform,
     isLoading,
     error,
     refetch

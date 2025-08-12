@@ -6,13 +6,17 @@ import * as THREE from 'three'
 import { Badge } from '@/components/ui/badge'
 import { useCADGeometry } from '@/hooks/useCADGeometry'
 
-export default function CustomGeometry() {
+interface CustomGeometryProps {
+  geometryId?: string
+}
+
+export default function CustomGeometry({ geometryId = 'box' }: CustomGeometryProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const [hoveredFace, setHoveredFace] = useState<number>(-1)
   const [selectedFaces, setSelectedFaces] = useState<Set<number>>(new Set())
 
-  // Use CAD geometry hook - defaulting to 'box' geometry
-  const { geometry, materials: baseMaterials, faceNames, isLoading, error } = useCADGeometry('box')
+  // Use CAD geometry hook with the provided geometryId
+  const { geometry, materials: baseMaterials, faceNames, transform, isLoading, error } = useCADGeometry(geometryId)
 
   // Create materials with dynamic colors based on hover/selection state
   const materials = useMemo(() => {
@@ -95,13 +99,23 @@ export default function CustomGeometry() {
         ref={meshRef}
         geometry={geometry}
         material={materials}
+        position={transform?.position || [0, 0, 0]}
+        rotation={transform?.rotation || [0, 0, 0]}
+        scale={transform?.scale || [1, 1, 1]}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         onClick={handleClick}
       />
       
       {hoveredFace !== -1 && faceNames.length > hoveredFace && (
-        <Html position={[0, 3, 0]} center>
+        <Html 
+          position={[
+            (transform?.position[0] || 0), 
+            (transform?.position[1] || 0), 
+            (transform?.position[2] || 0) + 3
+          ]} 
+          center
+        >
           <Badge variant="secondary" className="text-lg font-bold">
             {faceNames[hoveredFace]}
           </Badge>

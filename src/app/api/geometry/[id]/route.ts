@@ -11,107 +11,226 @@ export async function GET(
 
   // Sample CAD mesh data matching the current box geometry structure
   // This simulates data that would come from OpenCASCADE topology translation
-  const cadMeshData = {
-    id: geometryId,
-    metadata: {
-      name: `CAD_Geometry_${geometryId}`,
-      source: 'OpenCASCADE',
-      tessellationQuality: 'medium',
-      deflection: 0.1,
-      angularTolerance: 0.1
-    },
-    faces: [
-      {
-        id: 'front',
-        name: 'FRONT',
-        materialIndex: 0,
-        vertices: [
-          { pos: [-1, -1,  1], norm: [ 0,  0,  1], uv: [0, 0] },
-          { pos: [ 1, -1,  1], norm: [ 0,  0,  1], uv: [1, 0] },
-          { pos: [ 1,  1,  1], norm: [ 0,  0,  1], uv: [1, 1] },
-          { pos: [-1,  1,  1], norm: [ 0,  0,  1], uv: [0, 1] }
-        ],
-        triangles: [
-          { vertices: [0, 1, 2] },
-          { vertices: [2, 3, 0] }
-        ]
+  let cadMeshData
+
+  if (geometryId === 'box2') {
+    // Second box geometry at different position
+    cadMeshData = {
+      id: geometryId,
+      metadata: {
+        name: `CAD_Geometry_${geometryId}`,
+        source: 'OpenCASCADE' as const,
+        tessellationQuality: 'medium' as const,
+        deflection: 0.1,
+        angularTolerance: 0.1
       },
-      {
-        id: 'right',
-        name: 'RIGHT',
-        materialIndex: 1,
-        vertices: [
-          { pos: [ 1, -1,  1], norm: [ 1,  0,  0], uv: [0, 0] },
-          { pos: [ 1, -1, -1], norm: [ 1,  0,  0], uv: [1, 0] },
-          { pos: [ 1,  1, -1], norm: [ 1,  0,  0], uv: [1, 1] },
-          { pos: [ 1,  1,  1], norm: [ 1,  0,  0], uv: [0, 1] }
-        ],
-        triangles: [
-          { vertices: [0, 1, 2] },
-          { vertices: [2, 3, 0] }
-        ]
+      transform: {
+        position: [3, 0, 2] as [number, number, number], // Second box at different position
+        rotation: [0, 0, Math.PI/4] as [number, number, number], // Rotated 45 degrees around Z
+        scale: [0.5, 0.5, 2] as [number, number, number] // Smaller and taller
       },
-      {
-        id: 'back',
-        name: 'BACK',
-        materialIndex: 2,
-        vertices: [
-          { pos: [ 1, -1, -1], norm: [ 0,  0, -1], uv: [0, 0] },
-          { pos: [-1, -1, -1], norm: [ 0,  0, -1], uv: [1, 0] },
-          { pos: [-1,  1, -1], norm: [ 0,  0, -1], uv: [1, 1] },
-          { pos: [ 1,  1, -1], norm: [ 0,  0, -1], uv: [0, 1] }
-        ],
-        triangles: [
-          { vertices: [0, 1, 2] },
-          { vertices: [2, 3, 0] }
-        ]
+      faces: [
+        {
+          id: 'front',
+          name: 'FRONT',
+          materialIndex: 0,
+          vertices: [
+            { pos: [-1, -1,  1], norm: [ 0,  0,  1], uv: [0, 0] },
+            { pos: [ 1, -1,  1], norm: [ 0,  0,  1], uv: [1, 0] },
+            { pos: [ 1,  1,  1], norm: [ 0,  0,  1], uv: [1, 1] },
+            { pos: [-1,  1,  1], norm: [ 0,  0,  1], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'right',
+          name: 'RIGHT',
+          materialIndex: 1,
+          vertices: [
+            { pos: [ 1, -1,  1], norm: [ 1,  0,  0], uv: [0, 0] },
+            { pos: [ 1, -1, -1], norm: [ 1,  0,  0], uv: [1, 0] },
+            { pos: [ 1,  1, -1], norm: [ 1,  0,  0], uv: [1, 1] },
+            { pos: [ 1,  1,  1], norm: [ 1,  0,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'back',
+          name: 'BACK',
+          materialIndex: 2,
+          vertices: [
+            { pos: [ 1, -1, -1], norm: [ 0,  0, -1], uv: [0, 0] },
+            { pos: [-1, -1, -1], norm: [ 0,  0, -1], uv: [1, 0] },
+            { pos: [-1,  1, -1], norm: [ 0,  0, -1], uv: [1, 1] },
+            { pos: [ 1,  1, -1], norm: [ 0,  0, -1], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'left',
+          name: 'LEFT',
+          materialIndex: 3,
+          vertices: [
+            { pos: [-1, -1, -1], norm: [-1,  0,  0], uv: [0, 0] },
+            { pos: [-1, -1,  1], norm: [-1,  0,  0], uv: [1, 0] },
+            { pos: [-1,  1,  1], norm: [-1,  0,  0], uv: [1, 1] },
+            { pos: [-1,  1, -1], norm: [-1,  0,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'top',
+          name: 'TOP',
+          materialIndex: 4,
+          vertices: [
+            { pos: [ 1,  1, -1], norm: [ 0,  1,  0], uv: [0, 0] },
+            { pos: [-1,  1, -1], norm: [ 0,  1,  0], uv: [1, 0] },
+            { pos: [-1,  1,  1], norm: [ 0,  1,  0], uv: [1, 1] },
+            { pos: [ 1,  1,  1], norm: [ 0,  1,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'bottom',
+          name: 'BOTTOM',
+          materialIndex: 5,
+          vertices: [
+            { pos: [ 1, -1,  1], norm: [ 0, -1,  0], uv: [0, 0] },
+            { pos: [-1, -1,  1], norm: [ 0, -1,  0], uv: [1, 0] },
+            { pos: [-1, -1, -1], norm: [ 0, -1,  0], uv: [1, 1] },
+            { pos: [ 1, -1, -1], norm: [ 0, -1,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        }
+      ]
+    }
+  } else {
+    // Default box geometry
+    cadMeshData = {
+      id: geometryId,
+      metadata: {
+        name: `CAD_Geometry_${geometryId}`,
+        source: 'OpenCASCADE' as const,
+        tessellationQuality: 'medium' as const,
+        deflection: 0.1,
+        angularTolerance: 0.1
       },
-      {
-        id: 'left',
-        name: 'LEFT',
-        materialIndex: 3,
-        vertices: [
-          { pos: [-1, -1, -1], norm: [-1,  0,  0], uv: [0, 0] },
-          { pos: [-1, -1,  1], norm: [-1,  0,  0], uv: [1, 0] },
-          { pos: [-1,  1,  1], norm: [-1,  0,  0], uv: [1, 1] },
-          { pos: [-1,  1, -1], norm: [-1,  0,  0], uv: [0, 1] }
-        ],
-        triangles: [
-          { vertices: [0, 1, 2] },
-          { vertices: [2, 3, 0] }
-        ]
+      transform: {
+        position: [0, 0, 0] as [number, number, number], // Box sits at origin
+        rotation: [0, 0, 0] as [number, number, number], // No rotation
+        scale: [1, 1, 1] as [number, number, number]     // Unit scale
       },
-      {
-        id: 'top',
-        name: 'TOP',
-        materialIndex: 4,
-        vertices: [
-          { pos: [ 1,  1, -1], norm: [ 0,  1,  0], uv: [0, 0] },
-          { pos: [-1,  1, -1], norm: [ 0,  1,  0], uv: [1, 0] },
-          { pos: [-1,  1,  1], norm: [ 0,  1,  0], uv: [1, 1] },
-          { pos: [ 1,  1,  1], norm: [ 0,  1,  0], uv: [0, 1] }
-        ],
-        triangles: [
-          { vertices: [0, 1, 2] },
-          { vertices: [2, 3, 0] }
-        ]
-      },
-      {
-        id: 'bottom',
-        name: 'BOTTOM',
-        materialIndex: 5,
-        vertices: [
-          { pos: [ 1, -1,  1], norm: [ 0, -1,  0], uv: [0, 0] },
-          { pos: [-1, -1,  1], norm: [ 0, -1,  0], uv: [1, 0] },
-          { pos: [-1, -1, -1], norm: [ 0, -1,  0], uv: [1, 1] },
-          { pos: [ 1, -1, -1], norm: [ 0, -1,  0], uv: [0, 1] }
-        ],
-        triangles: [
-          { vertices: [0, 1, 2] },
-          { vertices: [2, 3, 0] }
-        ]
-      }
-    ]
+      faces: [
+        {
+          id: 'front',
+          name: 'FRONT',
+          materialIndex: 0,
+          vertices: [
+            { pos: [-1, -1,  1], norm: [ 0,  0,  1], uv: [0, 0] },
+            { pos: [ 1, -1,  1], norm: [ 0,  0,  1], uv: [1, 0] },
+            { pos: [ 1,  1,  1], norm: [ 0,  0,  1], uv: [1, 1] },
+            { pos: [-1,  1,  1], norm: [ 0,  0,  1], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'right',
+          name: 'RIGHT',
+          materialIndex: 1,
+          vertices: [
+            { pos: [ 1, -1,  1], norm: [ 1,  0,  0], uv: [0, 0] },
+            { pos: [ 1, -1, -1], norm: [ 1,  0,  0], uv: [1, 0] },
+            { pos: [ 1,  1, -1], norm: [ 1,  0,  0], uv: [1, 1] },
+            { pos: [ 1,  1,  1], norm: [ 1,  0,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'back',
+          name: 'BACK',
+          materialIndex: 2,
+          vertices: [
+            { pos: [ 1, -1, -1], norm: [ 0,  0, -1], uv: [0, 0] },
+            { pos: [-1, -1, -1], norm: [ 0,  0, -1], uv: [1, 0] },
+            { pos: [-1,  1, -1], norm: [ 0,  0, -1], uv: [1, 1] },
+            { pos: [ 1,  1, -1], norm: [ 0,  0, -1], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'left',
+          name: 'LEFT',
+          materialIndex: 3,
+          vertices: [
+            { pos: [-1, -1, -1], norm: [-1,  0,  0], uv: [0, 0] },
+            { pos: [-1, -1,  1], norm: [-1,  0,  0], uv: [1, 0] },
+            { pos: [-1,  1,  1], norm: [-1,  0,  0], uv: [1, 1] },
+            { pos: [-1,  1, -1], norm: [-1,  0,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'top',
+          name: 'TOP',
+          materialIndex: 4,
+          vertices: [
+            { pos: [ 1,  1, -1], norm: [ 0,  1,  0], uv: [0, 0] },
+            { pos: [-1,  1, -1], norm: [ 0,  1,  0], uv: [1, 0] },
+            { pos: [-1,  1,  1], norm: [ 0,  1,  0], uv: [1, 1] },
+            { pos: [ 1,  1,  1], norm: [ 0,  1,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        },
+        {
+          id: 'bottom',
+          name: 'BOTTOM',
+          materialIndex: 5,
+          vertices: [
+            { pos: [ 1, -1,  1], norm: [ 0, -1,  0], uv: [0, 0] },
+            { pos: [-1, -1,  1], norm: [ 0, -1,  0], uv: [1, 0] },
+            { pos: [-1, -1, -1], norm: [ 0, -1,  0], uv: [1, 1] },
+            { pos: [ 1, -1, -1], norm: [ 0, -1,  0], uv: [0, 1] }
+          ],
+          triangles: [
+            { vertices: [0, 1, 2] },
+            { vertices: [2, 3, 0] }
+          ]
+        }
+      ]
+    }
   }
 
   // Simulate different geometry types based on ID

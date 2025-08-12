@@ -18,6 +18,12 @@ export interface CADFace {
   triangles: Triangle[]
 }
 
+export interface CADTransform {
+  position: [number, number, number]
+  rotation: [number, number, number] // Euler angles in radians
+  scale: [number, number, number]
+}
+
 export interface CADMetadata {
   name: string
   source: 'OpenCASCADE' | 'Manual'
@@ -29,6 +35,7 @@ export interface CADMetadata {
 export interface CADMeshData {
   id: string
   metadata: CADMetadata
+  transform: CADTransform
   faces: CADFace[]
 }
 
@@ -37,6 +44,7 @@ export interface UseCADGeometryReturn {
   geometry: THREE.BufferGeometry | null
   materials: THREE.Material[]
   faceNames: string[]
+  transform: CADTransform | null
   isLoading: boolean
   error: string | null
   refetch: () => void
