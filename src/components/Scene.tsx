@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei'
 import CustomBox from './CustomBox'
 
 export default function Scene() {
@@ -14,7 +14,13 @@ export default function Scene() {
         <ambientLight intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <CustomBox />
-        <OrbitControls enableDamping={false} enablePan={true} enableZoom={true} enableRotate={true} />
+        <OrbitControls enableDamping={false} enablePan={true} enableZoom={true} enableRotate={true} makeDefault />
+        <GizmoHelper
+          alignment="bottom-right"
+          margin={[80, 80]}
+        >
+          <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white" />
+        </GizmoHelper>
       </Canvas>
     </div>
   )
