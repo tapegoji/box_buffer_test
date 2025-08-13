@@ -1,0 +1,339 @@
+{
+  "name": "simple_box",
+  "vertices": [
+    -5.0,
+    -5.0,
+    5.0,
+    -5.0,
+    -5.0,
+    -5.0,
+    -5.0,
+    5.0,
+    5.0,
+    -5.0,
+    5.0,
+    -5.0,
+    5.0,
+    -5.0,
+    5.0,
+    5.0,
+    -5.0,
+    -5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    -5.0
+  ],
+  "cad_vertices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "cad_edges": [
+    {
+      "id": 0,
+      "name": "edge_0",
+      "vertex_indices": [
+        1,
+        0
+      ],
+      "length": 10.0,
+      "curve_id": 0
+    },
+    {
+      "id": 1,
+      "name": "edge_1",
+      "vertex_indices": [
+        0,
+        2
+      ],
+      "length": 10.0,
+      "curve_id": 1
+    },
+    {
+      "id": 2,
+      "name": "edge_2",
+      "vertex_indices": [
+        3,
+        2
+      ],
+      "length": 10.0,
+      "curve_id": 2
+    },
+    {
+      "id": 3,
+      "name": "edge_3",
+      "vertex_indices": [
+        1,
+        3
+      ],
+      "length": 10.0,
+      "curve_id": 3
+    },
+    {
+      "id": 4,
+      "name": "edge_4",
+      "vertex_indices": [
+        5,
+        4
+      ],
+      "length": 10.0,
+      "curve_id": 4
+    },
+    {
+      "id": 5,
+      "name": "edge_5",
+      "vertex_indices": [
+        4,
+        6
+      ],
+      "length": 10.0,
+      "curve_id": 5
+    },
+    {
+      "id": 6,
+      "name": "edge_6",
+      "vertex_indices": [
+        7,
+        6
+      ],
+      "length": 10.0,
+      "curve_id": 6
+    },
+    {
+      "id": 7,
+      "name": "edge_7",
+      "vertex_indices": [
+        5,
+        7
+      ],
+      "length": 10.0,
+      "curve_id": 7
+    },
+    {
+      "id": 8,
+      "name": "edge_8",
+      "vertex_indices": [
+        1,
+        5
+      ],
+      "length": 10.0,
+      "curve_id": 8
+    },
+    {
+      "id": 9,
+      "name": "edge_9",
+      "vertex_indices": [
+        0,
+        4
+      ],
+      "length": 10.0,
+      "curve_id": 9
+    },
+    {
+      "id": 10,
+      "name": "edge_10",
+      "vertex_indices": [
+        3,
+        7
+      ],
+      "length": 10.0,
+      "curve_id": 10
+    },
+    {
+      "id": 11,
+      "name": "edge_11",
+      "vertex_indices": [
+        2,
+        6
+      ],
+      "length": 10.0,
+      "curve_id": 11
+    }
+  ],
+  "cad_wires": [
+    {
+      "id": 0,
+      "name": "wire_0",
+      "edge_indices": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 1,
+      "name": "wire_1",
+      "edge_indices": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": 2,
+      "name": "wire_2",
+      "edge_indices": [
+        8,
+        4,
+        9,
+        0
+      ]
+    },
+    {
+      "id": 3,
+      "name": "wire_3",
+      "edge_indices": [
+        10,
+        6,
+        11,
+        2
+      ]
+    },
+    {
+      "id": 4,
+      "name": "wire_4",
+      "edge_indices": [
+        3,
+        10,
+        7,
+        8
+      ]
+    },
+    {
+      "id": 5,
+      "name": "wire_5",
+      "edge_indices": [
+        1,
+        11,
+        5,
+        9
+      ]
+    }
+  ],
+  "cad_faces": [
+    {
+      "id": 0,
+      "name": "face_0",
+      "wire_indices": [
+        0
+      ],
+      "center": [
+        -5.0,
+        2.2204460492503135e-17,
+        -6.93889390390723e-18
+      ],
+      "normal": [
+        -1.0,
+        -0.0,
+        0.0
+      ],
+      "area": 99.99999999999999,
+      "surface_id": 0
+    },
+    {
+      "id": 1,
+      "name": "face_1",
+      "wire_indices": [
+        1
+      ],
+      "center": [
+        5.0,
+        2.2204460492503135e-17,
+        -6.93889390390723e-18
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "area": 99.99999999999999,
+      "surface_id": 1
+    },
+    {
+      "id": 2,
+      "name": "face_2",
+      "wire_indices": [
+        2
+      ],
+      "center": [
+        6.66133814775094e-17,
+        -5.0,
+        -6.93889390390723e-18
+      ],
+      "normal": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "area": 99.99999999999999,
+      "surface_id": 2
+    },
+    {
+      "id": 3,
+      "name": "face_3",
+      "wire_indices": [
+        3
+      ],
+      "center": [
+        6.66133814775094e-17,
+        5.0,
+        -6.93889390390723e-18
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "area": 99.99999999999999,
+      "surface_id": 3
+    },
+    {
+      "id": 4,
+      "name": "face_4",
+      "wire_indices": [
+        4
+      ],
+      "center": [
+        -6.93889390390723e-18,
+        6.66133814775094e-17,
+        -5.0
+      ],
+      "normal": [
+        -0.0,
+        -0.0,
+        -1.0
+      ],
+      "area": 99.99999999999999,
+      "surface_id": 4
+    },
+    {
+      "id": 5,
+      "name": "face_5",
+      "wire_indices": [
+        5
+      ],
+      "center": [
+        -6.93889390390723e-18,
+        6.66133814775094e-17,
+        5.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "area": 99.99999999999999,
+      "surface_id": 5
+    }
+  ]
+}
