@@ -20,9 +20,18 @@ export function useCADGeometry(geometryId: string): UseCADGeometryReturn {
 
       const data: CADMeshData = await response.json()
       
+      console.log('Received CAD data:', data)
+      console.log('bufferGeometry:', data.bufferGeometry)
+      console.log('faces:', data.bufferGeometry?.faces)
+      
       // Validate the received data structure
-      if (!data.faces || !Array.isArray(data.faces)) {
-        throw new Error('Invalid CAD data: missing faces array')
+      if (!data.bufferGeometry || !data.bufferGeometry.faces || !Array.isArray(data.bufferGeometry.faces)) {
+        console.error('Validation failed:', {
+          hasBufferGeometry: !!data.bufferGeometry,
+          hasFaces: !!data.bufferGeometry?.faces,
+          isArray: Array.isArray(data.bufferGeometry?.faces)
+        })
+        throw new Error('Invalid CAD data: missing BufferGeometry data')
       }
 
       setCadData(data)
@@ -45,51 +54,26 @@ export function useCADGeometry(geometryId: string): UseCADGeometryReturn {
 
   // Process CAD data into Three.js geometry
   const processedGeometry = useMemo((): ProcessedGeometry | null => {
-    if (!cadData) return null
+    if (!cadData?.bufferGeometry) return null
 
-    const allVertices: number[] = []
-    const allNormals: number[] = []
-    const allUvs: number[] = []
-    const allIndices: number[] = []
+    const { positions, normals, uvs, faces } = cadData.bufferGeometry
+    
+    // Create material groups from face information
     const groups: Array<{ start: number; count: number; materialIndex: number }> = []
-
-    let vertexOffset = 0
-
-    cadData.faces.forEach((face) => {
-      const faceStartIndex = allIndices.length
-
-      // Add vertices, normals, and UVs for this face
-      face.vertices.forEach((vertex) => {
-        allVertices.push(...vertex.pos)
-        allNormals.push(...vertex.norm)
-        allUvs.push(...vertex.uv)
-      })
-
-      // Add indices for this face's triangles
-      face.triangles.forEach((triangle) => {
-        allIndices.push(
-          triangle.vertices[0] + vertexOffset,
-          triangle.vertices[1] + vertexOffset,
-          triangle.vertices[2] + vertexOffset
-        )
-      })
-
-      // Create material group for this face
-      const triangleCount = face.triangles.length * 3
+    
+    faces.forEach((face) => {
       groups.push({
-        start: faceStartIndex,
-        count: triangleCount,
+        start: face.vertexStart,
+        count: face.vertexCount,
         materialIndex: face.materialIndex
       })
-
-      vertexOffset += face.vertices.length
     })
 
     return {
-      vertices: new Float32Array(allVertices),
-      normals: new Float32Array(allNormals),
-      uvs: new Float32Array(allUvs),
-      indices: allIndices,
+      vertices: new Float32Array(positions),
+      normals: new Float32Array(normals),
+      uvs: new Float32Array(uvs),
+      indices: null, // No indices needed for non-indexed geometry
       groups
     }
   }, [cadData])
@@ -105,8 +89,10 @@ export function useCADGeometry(geometryId: string): UseCADGeometryReturn {
     geo.setAttribute('normal', new THREE.BufferAttribute(processedGeometry.normals, 3))
     geo.setAttribute('uv', new THREE.BufferAttribute(processedGeometry.uvs, 2))
 
-    // Set indices
-    geo.setIndex(processedGeometry.indices)
+    // Set indices only if they exist (indexed geometry)
+    if (processedGeometry.indices) {
+      geo.setIndex(processedGeometry.indices)
+    }
 
     // Add material groups
     processedGeometry.groups.forEach((group) => {
@@ -118,10 +104,10 @@ export function useCADGeometry(geometryId: string): UseCADGeometryReturn {
 
   // Create materials array
   const materials = useMemo(() => {
-    if (!cadData) return []
+    if (!cadData?.bufferGeometry?.faces) return []
 
-    const materialCount = cadData.faces.length
-    return Array.from({ length: materialCount }, () => 
+    const faceCount = cadData.bufferGeometry.faces.length
+    return Array.from({ length: faceCount }, () => 
       new THREE.MeshStandardMaterial({ 
         color: '#cccccc',
         side: THREE.DoubleSide
@@ -131,8 +117,9 @@ export function useCADGeometry(geometryId: string): UseCADGeometryReturn {
 
   // Extract face names for UI
   const faceNames = useMemo(() => {
-    if (!cadData) return []
-    return cadData.faces.map(face => face.name)
+    if (!cadData?.bufferGeometry?.faces) return []
+    
+    return cadData.bufferGeometry.faces.map(face => face.name)
   }, [cadData])
 
   // Extract transform data

@@ -1,22 +1,5 @@
 // CAD-specific geometry types for OpenCASCADE integration
-
-export interface Vector3 {
-  pos: [number, number, number]
-  norm: [number, number, number]
-  uv: [number, number]
-}
-
-export interface Triangle {
-  vertices: [number, number, number]
-}
-
-export interface CADFace {
-  id: string
-  name: string
-  materialIndex: number
-  vertices: Vector3[]
-  triangles: Triangle[]
-}
+import * as THREE from 'three'
 
 export interface CADTransform {
   position: [number, number, number]
@@ -32,11 +15,29 @@ export interface CADMetadata {
   angularTolerance: number
 }
 
+// Face information for BufferGeometry - maps to material groups
+export interface CADFaceInfo {
+  id: string
+  name: string
+  materialIndex: number
+  vertexStart: number // Starting vertex index in the buffer
+  vertexCount: number  // Number of vertices for this face
+}
+
+// Optimized BufferGeometry format
+export interface BufferGeometryData {
+  positions: number[]
+  normals: number[]
+  uvs: number[]
+  vertexCount: number
+  faces: CADFaceInfo[]
+}
+
 export interface CADMeshData {
   id: string
   metadata: CADMetadata
   transform: CADTransform
-  faces: CADFace[]
+  bufferGeometry: BufferGeometryData
 }
 
 // Hook return types
@@ -55,7 +56,7 @@ export interface ProcessedGeometry {
   vertices: Float32Array
   normals: Float32Array
   uvs: Float32Array
-  indices: number[]
+  indices: number[] | null // Can be null for non-indexed geometry
   groups: Array<{
     start: number
     count: number
